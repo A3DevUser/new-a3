@@ -16,6 +16,10 @@ const Table = ({col,dData,accArr,outPutData,parentHeader,setfinalOpData,setfileO
   const [opData,setopData]= useState([...outPutData])
 
   const MainPartyDataRed = useSelector((state)=>state.MainPartyDataRed)
+  const mySelRowState = useSelector((state)=>state.selectedRowState)
+  const AreaSchemeDateSetRed = useSelector((state)=>state.AreaSchemeDateSetRed)
+
+
 
 
   useEffect(()=>{
@@ -29,15 +33,39 @@ const Table = ({col,dData,accArr,outPutData,parentHeader,setfinalOpData,setfileO
   useEffect(()=>{
     const colKey =  col.filter((cres)=>{return cres.parentCell==='account'}).map((res)=>{return res.accessor})
     const accKey = opData.map((res)=>{ return res.accId})
+    const selcRowId = mySelRowState.map((res)=>{return res.original.id})
 
     accArr.forEach((res)=>{
       colKey.map((cres)=>{
         // console.log(cres+'$#'+res.id)
         data.forEach((dres)=>{
-          dres[cres+'$#'+res.id] = dres[cres]
+if(AreaSchemeDateSetRed.type == 'Sample'){
+  dres[cres+'$#'+res.id] = dres[cres];
+}else{
+  if(selcRowId.includes(dres.id)){
+    dres[cres+'$#'+res.id] = dres[cres];
+    dres['isDisable'] = false;
+  }else{
+    dres[cres+'$#'+res.id] = dres[cres];
+    dres['isDisable'] = true;
+      }
+}
+
         })
       })
     })
+
+// setdata((old)=>{
+//   return old.map((res)=>{
+//     if(selcRowId.includes(res.id)){
+//       return {...res,isDisable : false}
+//     }else{
+//       return {...res,isDisable : true}
+//     }
+//   })
+// })
+
+console.log(data)
 
 opData.map((res, i) => {
   console.log(res)

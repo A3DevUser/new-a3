@@ -170,6 +170,7 @@ const PartySheetsInput = (props) => {
         // {  
             // console.log(opId)
             // finalAccountData.length * tests.length <= 2000 ? 
+            console.log(outputId)
             if(outputId.length > 0){
                 dispatch(fetchOutputData(outputId))
             }
@@ -196,14 +197,24 @@ const PartySheetsInput = (props) => {
 
 
     useEffect(() => {
-        if(((getTestData.val.length > 0)&&(getTableAccountData.val.length >0))&&accounts.includes(getTableAccountData.val[0].id))
-        {
-            getTableAccountData.val.map((acc) => {
+        if(AreaSchemeDateSetRed.type == 'Sample'){
+            if(((getTestData.val.length > 0)&&(getTableAccountData.val.length >0))&&accounts.includes(getTableAccountData.val[0].id))
+            {
+                getTableAccountData.val.map((acc) => {
+                    getTestData.val.map((test) => {
+                        setOutputId(outputId => [...outputId, auditId+ test.testRef + acc.id+acc.cunDate])
+                        // setOutputId([...outputId, test.testRef + acc.id])
+                    })
+                })
+            }
+        }else{
+            accounts.map((acc) => {
                 getTestData.val.map((test) => {
-                    setOutputId(outputId => [...outputId, auditId+ test.testRef + acc.id+acc.cunDate])
+                    setOutputId(outputId => [...outputId, auditId+ test.testRef + acc.id])
                     // setOutputId([...outputId, test.testRef + acc.id])
                 })
             })
+
         }
         // console.log(getTableAccountData)
 
@@ -236,6 +247,15 @@ const PartySheetsInput = (props) => {
         window.onbeforeunload = null; // necessary to prevent infinite loop, that kills your browser 
     }
 
+    // useEffect(()=>{
+    //     accounts.map((acc) => {
+    //         getTestData.val.map((test) => {
+    //             setOutputId(outputId => [...outputId, auditId+ test.testRef + acc.id])
+    //             // setOutputId([...outputId, test.testRef + acc.id])
+    //         })
+    //     })
+    // },[generatedSheetDetails])
+
     useEffect(() => {
         if(accounts.length > 0){
 
@@ -256,6 +276,7 @@ const PartySheetsInput = (props) => {
         //     setSheets();
         //     }
             // dispatch(fetchTableAccData(accounts,AuditTypeSetRed.auditType))
+            console.log(accounts)
         },[accounts])
 
     // useEffect(() => {
@@ -269,7 +290,11 @@ const PartySheetsInput = (props) => {
             setOutputId([])
             // setOutputData([])
             // setAccountsId();
-            setAccounts(allAcc.slice(((location.state.sheetId - 1) * 10),(location.state.sheetId *10)))
+            if(AreaSchemeDateSetRed.type == 'Sample'){
+                setAccounts(allAcc.slice(((location.state.sheetId - 1) * 10),(location.state.sheetId *10)))
+            }else{
+                setAccounts(allAcc.map((res)=>{return {id:res}}))
+            }
             // setAccountResponseCount([])
             // setFinalAccountData([])
             // setInitialData([])
@@ -337,8 +362,8 @@ const PartySheetsInput = (props) => {
         <div className="party-btn-div">
         </div>
         {
-
-           getColumnData.loading ? 
+AreaSchemeDateSetRed.type == 'Sample' ?
+           (getColumnData.loading ? 
            <div className="d-flex justify-content-center party-loading-style">
            <div className="spinner-border" role="status">
                <span className="visually-hidden">Loading...</span>
@@ -376,7 +401,43 @@ const PartySheetsInput = (props) => {
         //    </div> :
 
         // <Table accData={['Test Details',...accounts]} TableData={getTestData.val} columnData={getColumnData.val.sort((a,b)=>{return a.orderBy-b.orderBy})} schemeCode={location.state.schemeCode} outputData={getOutputData.val} auditId={auditId} userId = {userId} accDetails={getTableAccountData.val} newHead={getPartyHeaderData.val}/>
-        <Table accArr={getTableAccountData.val} col={getColumnData.val.sort((a,b)=>{return a.orderBy-b.orderBy})} dData={getTestData.val} outPutData={getOutputData.val} parentHeader={getPartyHeaderData.val} setfinalOpData={setfinalOpData} setfileOpData={setfileOpData} />
+        <Table accArr={getTableAccountData.val} col={getColumnData.val.sort((a,b)=>{return a.orderBy-b.orderBy})} dData={getTestData.val} outPutData={getOutputData.val} parentHeader={getPartyHeaderData.val} setfinalOpData={setfinalOpData} setfileOpData={setfileOpData} />) :
+
+        (getColumnData.loading ? 
+            <div className="d-flex justify-content-center party-loading-style">
+            <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+            </div> : 
+            getOutputData.loading ? <div className="d-flex justify-content-center party-loading-style">
+            <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+            </div> :  getDDData.loading ? <div className="d-flex justify-content-center party-loading-style">
+            <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+            </div> :
+            getPartyHeaderData.loading ?  <div className="d-flex justify-content-center party-loading-style">
+            <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+            </div> :
+            getTestData.loading ? <div className="d-flex justify-content-center party-loading-style">
+            <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+            </div> :
+         //    getAccountDataId.loading ? <div className="d-flex justify-content-center party-loading-style">
+         //    <div className="spinner-border" role="status">
+         //        <span className="visually-hidden">Loading...</span>
+         //    </div>
+         //    </div> :
+ 
+         // <Table accData={['Test Details',...accounts]} TableData={getTestData.val} columnData={getColumnData.val.sort((a,b)=>{return a.orderBy-b.orderBy})} schemeCode={location.state.schemeCode} outputData={getOutputData.val} auditId={auditId} userId = {userId} accDetails={getTableAccountData.val} newHead={getPartyHeaderData.val}/>
+         <Table accArr={accounts} col={getColumnData.val.sort((a,b)=>{return a.orderBy-b.orderBy})} dData={getTestData.val} outPutData={getOutputData.val} parentHeader={getPartyHeaderData.val} setfinalOpData={setfinalOpData} setfileOpData={setfileOpData} />)
+
+
 
         }
            </div> 
