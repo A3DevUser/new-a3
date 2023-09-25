@@ -237,7 +237,8 @@ console.log(colData)
 
     
     useEffect(()=>{
-        dispatch(MainPartyDataSetter([...data]))
+      console.log(data)
+        dispatch(MainPartyDataSetter([...data.map((res)=>{return {...res,id:res.testRef}})]))
     },[data])
 
     const updateMyAttachData = (rowIndex, columnId, value,formDataValue,cell)=>{

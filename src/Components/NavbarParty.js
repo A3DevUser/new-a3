@@ -61,12 +61,12 @@ const getOutputData = useSelector((state)=>state.getOutputData)
   //   console.log(getTableAccountData.val)
   // },[getTableAccountData])
 
-  useEffect(()=>{
-    console.log(fileOpData)
-    console.log(finalOpData)
-    console.log([MainPartyDataRed,...getOutputData.val])
-    console.log([getOutputData])
-},[fileOpData,finalOpData,MainPartyDataRed,getOutputData])
+//   useEffect(()=>{
+//     console.log(fileOpData)
+//     console.log(finalOpData)
+//     console.log([MainPartyDataRed,...getOutputData.val])
+//     console.log([getOutputData])
+// },[fileOpData,finalOpData,MainPartyDataRed,getOutputData])
 
 
   const accRef = useRef()
@@ -394,7 +394,7 @@ const getOutputData = useSelector((state)=>state.getOutputData)
     // The below handleSave function handles save with the validation of save popup
 
     const handleSave = () =>{
-      console.log(finalOpData)
+      // console.log(finalOpData)
       const nonPassNa = finalOpData.filter((fil)=>{return (fil.result!=='Pass' && fil.result !=='Na')  &&(fil.remarks===null || fil.remarks===undefined || fil.remarks==='')});
       if(nonPassNa.length > 0){
         dispatch(fetchModColData('Form-104'))

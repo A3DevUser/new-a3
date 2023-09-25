@@ -89,6 +89,17 @@ const PartySheetsInput = (props) => {
     const MainPartyDataRed = useSelector((state)=>state.MainPartyDataRed)
 
 
+    // useEffect(()=>{
+    //     if(MainPartyDataRed){
+    //         console.log('inside if')
+    //         setopData([...getOutputData.val,...MainPartyDataRed])
+    //     }else{
+    //         console.log('inside else')
+    //         setopData([...getOutputData.val])
+    //     }
+    // },[MainPartyDataRed])
+
+
 
 
     // var sheetCounter = [];

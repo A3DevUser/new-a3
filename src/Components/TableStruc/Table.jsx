@@ -18,21 +18,21 @@ const Table = ({col,dData,accArr,outPutData,parentHeader,setfinalOpData,setfileO
   const mySelRowState = useSelector((state)=>state.selectedRowState)
   const AreaSchemeDateSetRed = useSelector((state)=>state.AreaSchemeDateSetRed)
 
-
-
-
   useEffect(()=>{
-            if(MainPartyDataRed){
-              setopData((old)=>{return [...old,...MainPartyDataRed]})
-        }else{
-          setopData((old)=>{return [...old]})
-        }
-  },[MainPartyDataRed])
+    if(MainPartyDataRed){
+        setopData([...opData,...MainPartyDataRed])
+    }else{
+        setopData([...opData])
+    }
+},[MainPartyDataRed])
+
 
   useEffect(()=>{
     const colKey =  col.filter((cres)=>{return cres.parentCell==='account'}).map((res)=>{return res.accessor})
     const accKey = opData.map((res)=>{ return res.accId})
     const selcRowId = mySelRowState.map((res)=>{return res.original.id})
+
+
 
     accArr.forEach((res)=>{
       colKey.map((cres)=>{
@@ -59,6 +59,8 @@ opData.map((res, i) => {
       });
     })
 
+    console.log(opData)
+
 
 const mergedObjects = {};
 opData.forEach((obj) => {
@@ -74,9 +76,15 @@ opData.forEach((obj) => {
 const mergedArray = Object.values(mergedObjects)
 mergedArray.forEach(res => colKey.forEach(cres => delete res[cres]))
 
+
 setdata(data.map((res,i)=>{
   const obj1 = data[i];
   const obj2 = mergedArray.find((mres)=>mres.testRef === obj1.id)
+
+  console.log(data[i])
+  console.log(mergedArray.forEach((mres)=>{console.log(mres.testRef);
+    console.log(obj1.id)}))
+
 
   function mergeObjects(obj1, obj2) {
     const result = {};
@@ -105,8 +113,7 @@ setdata(data.map((res,i)=>{
   }
 
 }))
-
-},[])
+},[opData])
 
 const formData = new FormData()
   const updateMyData = (rowIndex, columnId, value, fileData,parentId,isCal) => {
