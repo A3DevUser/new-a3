@@ -4,7 +4,6 @@ import { Styles } from './TableStyles'
 import './TableStyle.css'
 import { ColumnHeader } from './ColumnHeader'
 import TableStruc from './TableStruc'
-import axios from 'axios'
 import { useSticky } from 'react-table-sticky'
 import { useSelector } from 'react-redux'
 
@@ -50,25 +49,11 @@ if(AreaSchemeDateSetRed.type == 'Sample'){
     dres['isDisable'] = true;
       }
 }
-
         })
       })
     })
 
-// setdata((old)=>{
-//   return old.map((res)=>{
-//     if(selcRowId.includes(res.id)){
-//       return {...res,isDisable : false}
-//     }else{
-//       return {...res,isDisable : true}
-//     }
-//   })
-// })
-
-console.log(data)
-
 opData.map((res, i) => {
-  console.log(res)
       colKey.forEach((cres) => {
         res[cres + '$#' + accKey[i]] = res[cres];
       });
@@ -76,20 +61,16 @@ opData.map((res, i) => {
 
 
 const mergedObjects = {};
-// Iterate through the array and merge objects with the same ID
 opData.forEach((obj) => {
   const id = obj.testRef;
 
   if (!mergedObjects[id]) {
-    // If the ID is not in the mergedObjects, create a new entry
     mergedObjects[id] = { ...obj };
   } else {
-    // If the ID is already in the mergedObjects, merge the properties
     Object.assign(mergedObjects[id], obj);
   }
 });
 
-// Convert the mergedObjects back to an array
 const mergedArray = Object.values(mergedObjects)
 mergedArray.forEach(res => colKey.forEach(cres => delete res[cres]))
 
@@ -97,18 +78,15 @@ setdata(data.map((res,i)=>{
   const obj1 = data[i];
   const obj2 = mergedArray.find((mres)=>mres.testRef === obj1.id)
 
-
   function mergeObjects(obj1, obj2) {
     const result = {};
   
-    // Iterate over obj1 properties
     for (const key in obj1) {
       if (obj1.hasOwnProperty(key) && obj1[key] !== undefined) {
         result[key] = obj1[key];
       }
     }
   
-    // Iterate over obj2 properties
     for (const key in obj2) {
       if (obj2.hasOwnProperty(key) && obj2[key] !== undefined) {
         result[key] = obj2[key];
@@ -178,45 +156,23 @@ if(isCal){
     )
   }
 
-  // useEffect(()=>{
-  //   console.log(fileArr)
-  // },[fileArr])
-
-  
-
-  const handleSave = () =>{
-
-  }
-
   useEffect(()=>{
     setfinalOpData(finalArr)
   },[finalArr])
-
-  // const parentHeader = [
-  //   {title:'test',storeVal :'test'},{title:'account',storeVal:'account'}
-  // ]
 
     const[columns]=useState(ColumnHeader(col,parentHeader,updateMyData,data.map((res)=>{return{id:res.id,dropDown :res.dropDown, logicDd : res.logic, mixVal : res.mixVal}}),accArr,))
 
       useEffect(()=>{
         if(chngRow.rowIndex){
           let obj ={...data[chngRow.rowIndex]}
-          // console.log(chngRow)
-          // console.log(Object.keys(obj).filter((fil)=>{return fil.includes('$#')}).filter((fil)=>{return !fil.includes(chngRow.parentId)}))
            Object.keys(obj).filter((fil)=>{return fil.includes('$#')}).filter((fil)=>{return !fil.includes(chngRow.parentId)}).forEach((res)=>{ delete obj[res] })
           Object.keys(obj).filter((fil)=>{return fil.includes('$#')}).forEach((res)=>{obj[res.split('$#')[0]]=obj[res]; delete obj[res]})
 
-          // console.log(JSON.stringify(obj))
           obj = {...obj,...accArr.filter((fil)=>{ return fil.id == obj.accId})[0]}
 
-
          const newObj =Object.keys(obj).filter((fil)=>{return obj[fil] !== null}).map((res)=>{return {[res] : obj[res]}}).reduce((accumulator, currentObject) => {
-            // Use the spread operator to merge the objects
             return { ...accumulator, ...currentObject };
           }, {})
-
-          // console.log(newObj)
-
 
           if(finalArr.length==0 || finalArr.filter((fil)=>{ return (fil.id == newObj.id)&&(fil.testRef == newObj.testRef)}).length == 0){
             setfinalArr([...finalArr,newObj])
@@ -231,8 +187,6 @@ if(isCal){
               })}
               )
           }
-
-
         }
 
 console.log(data)
