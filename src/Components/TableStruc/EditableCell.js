@@ -6,6 +6,7 @@ export const EditableCell = ({
     column:  id ,
     updateMyData, 
     colObj:colObj,
+    rowObj : rowObj,
     parentId
   }) => {
     const [value, setValue] = React.useState(initialValue)
@@ -24,7 +25,7 @@ export const EditableCell = ({
     return <div>
       <textarea value={value} className='form-control' style={{width:colObj.width
       // , background : value ? '#28a745' : 'white', color : 'white',
-      }} onChange={onChange} onBlur={onBlur} placeholder='Enter Remark...' />
+      }} onChange={onChange} onBlur={onBlur} placeholder='Enter Remark...' disabled={rowObj.original.isDisable} />
       {/* xyz */}
     </div>
   }
@@ -36,6 +37,7 @@ export const EditableCell = ({
     updateMyData,
     dropDown ,
     colObj:colObj,
+    rowObj : rowObj,
     parentId
 
   }) => {
@@ -59,7 +61,7 @@ export const EditableCell = ({
     }
 
   
-    return <select value={value} onChange={onChange} onBlur={onBlur} className='form-control' style={{width:colObj.width,height:'7vh'}}>
+    return <select value={value} onChange={onChange} onBlur={onBlur} className='form-control' style={{width:colObj.width,height:'7vh'}} disabled={rowObj.original.isDisable}>
       <option>Select One</option>
       {
         opt.map((res,i)=>{
@@ -76,6 +78,7 @@ export const EditableCell = ({
     column:  id ,
     updateMyData, 
     colObj:colObj,
+    rowObj : rowObj,
     parentId
   }) => {
     const [value, setValue] = React.useState(initialValue)
@@ -94,7 +97,7 @@ export const EditableCell = ({
 
   
     return <div>
-      <input value={value} type={'number'} className='form-control' style={{width:colObj.width}} onChange={onChange} onBlur={onBlur} placeholder='Enter Remark...' />
+      <input value={value} type={'number'} className='form-control' style={{width:colObj.width}} onChange={onChange} onBlur={onBlur} placeholder='Enter Remark...' disabled={rowObj.original.isDisable} />
       {/* xyz */}
     </div>
   }
@@ -105,6 +108,7 @@ export const EditableCell = ({
     column:  id ,
     updateMyData, 
     colObj:colObj,
+    rowObj : rowObj,
     parentId
   }) => {
     const [value, setValue] = React.useState(initialValue)
@@ -122,7 +126,7 @@ export const EditableCell = ({
     }, [initialValue])
   
     return <div>
-      <input value={value} type={'date'} className='form-control' style={{width:colObj.width}} onChange={onChange} onBlur={onBlur} placeholder='Enter Remark...' />
+      <input value={value} type={'date'} className='form-control' style={{width:colObj.width}} onChange={onChange} onBlur={onBlur} placeholder='Enter Remark...' disabled={rowObj.original.isDisable} />
       {/* xyz */}
     </div>
   }
@@ -159,18 +163,18 @@ if(dropDown.filter((fil,i)=>{return i==index})[0].mixVal){
     if(obj.original.inputType==='text'){
       return <div>
       <textarea value={value} className='form-control' style={{width:colObj.width
-      }} onChange={onChange} onBlur={onBlur} placeholder='Enter Remark...' />
+      }} onChange={onChange} onBlur={onBlur} placeholder='Enter Remark...' disabled={obj.original.isDisable} />
     </div>
     }else if(obj.original.inputType==='number'){
       return <div>
-      <input value={value} type={'number'} className='form-control' style={{width:colObj.width}} onChange={onChange} onBlur={onBlur} placeholder='Enter Remark...' />
+      <input value={value} type={'number'} className='form-control' style={{width:colObj.width}} onChange={onChange} onBlur={onBlur} placeholder='Enter Remark...' disabled={obj.original.isDisable} />
     </div>
     }else if(obj.original.inputType==='date'){
       return <div>
-      <input value={value} type={'date'} className='form-control' style={{width:colObj.width}} onChange={onChange} onBlur={onBlur} placeholder='Enter Remark...' />
+      <input value={value} type={'date'} className='form-control' style={{width:colObj.width}} onChange={onChange} onBlur={onBlur} placeholder='Enter Remark...' disabled={obj.original.isDisable} />
     </div>
     }else if(obj.original.inputType==='dropDown'){
-      return <select value={value} onChange={onChange} onBlur={onBlur} className='form-control' style={{width:colObj.width,height:'7vh'}}>
+      return <select value={value} onChange={onChange} onBlur={onBlur} className='form-control' style={{width:colObj.width,height:'7vh'}} disabled={obj.original.isDisable}>
       <option>Select One</option>
       {
         opt.map((res,i)=>{
@@ -188,6 +192,7 @@ if(dropDown.filter((fil,i)=>{return i==index})[0].mixVal){
     column:  id ,
     updateMyData, 
     colObj:colObj,
+    rowObj : rowObj,
     parentId
   }) => {
     const [value, setValue] = React.useState(initialValue)
@@ -219,7 +224,7 @@ if(dropDown.filter((fil,i)=>{return i==index})[0].mixVal){
 
     return <div>
       { value==='' || value===null || value === undefined ?
-        <input type={'file'}  className='form-control' style={{width:colObj.width}} onChange={onChange}  placeholder='Enter Remark...' /> :
+        <input type={'file'}  className='form-control' style={{width:colObj.width}} onChange={onChange}  placeholder='Enter Remark...' disabled={rowObj.original.isDisable} /> :
         <div ><span onClick={(e)=>{handleDownload(value)}} className='fileName'>{value}</span><br/><button className="btn btn-danger btn-sm"  onClick={handleRemove}>Remove</button></div>
       }
     </div>
@@ -233,6 +238,7 @@ if(dropDown.filter((fil,i)=>{return i==index})[0].mixVal){
     updateMyData,
     dropDown ,
     colObj:colObj,
+    rowObj : rowObj,
     parentId
 
   }) => {
@@ -252,7 +258,7 @@ if(dropDown.filter((fil,i)=>{return i==index})[0].mixVal){
 
     let opt = dropDown.filter((fil,i)=>{return i==index})[0].logicDd.split(',').map((res)=>{ return res.split('-')}).map((res)=>{ return {title :res[0], value : res[1]}})
   
-    return <select value={value} onChange={onChange} onBlur={onBlur} className='form-control' style={{width:colObj.width,height:'7vh'}}>
+    return <select value={value} onChange={onChange} onBlur={onBlur} className='form-control' style={{width:colObj.width,height:'7vh'}} disabled={rowObj.original.isDisable}>
       <option>Select One</option>
       {
         opt.map((res,i)=>{

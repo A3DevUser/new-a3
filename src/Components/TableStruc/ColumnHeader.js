@@ -26,7 +26,7 @@ export const ColumnHeader = (col,parentHeader,updateMyData,dropDown,newArr) =>{
                   return {
                     Header : ares.fieldName,
                     accessor : ares.accessor+'$#'+accres.id,
-                    Cell: ({cell})=>{return <EditableCell column={cell.column.id} row={cell.row.id} updateMyData={updateMyData} value={cell.value} colObj={cell.column} parentId={cell} />},
+                    Cell: ({cell})=>{return <EditableCell column={cell.column.id} row={cell.row.id} updateMyData={updateMyData} value={cell.value} colObj={cell.column} parentId={cell} rowObj={cell.row} />},
                     width : ares.width,
                   }
                 }else if(ares.cellType==='dropDown'){
@@ -41,7 +41,7 @@ export const ColumnHeader = (col,parentHeader,updateMyData,dropDown,newArr) =>{
                   return {
                     Header : ares.fieldName,
                     accessor : ares.accessor+'$#'+accres.id,
-                    Cell: ({cell})=>{return <EditableDateCell column={cell.column.id} row={cell.row.id} updateMyData={updateMyData} value={cell.value} colObj={cell.column} parentId={cell} />},
+                    Cell: ({cell})=>{return <EditableDateCell column={cell.column.id} row={cell.row.id} updateMyData={updateMyData} value={cell.value} colObj={cell.column} parentId={cell} rowObj={cell.row} />},
                     width : ares.width
     
                   }
@@ -49,7 +49,7 @@ export const ColumnHeader = (col,parentHeader,updateMyData,dropDown,newArr) =>{
                   return {
                     Header : ares.fieldName,
                     accessor : ares.accessor+'$#'+accres.id,
-                    Cell: ({cell})=>{return <EditableNumCell column={cell.column.id} row={cell.row.id} updateMyData={updateMyData} value={cell.value} dropDown={dropDown} colObj={cell.column} parentId={cell} />},
+                    Cell: ({cell})=>{return <EditableNumCell column={cell.column.id} row={cell.row.id} updateMyData={updateMyData} value={cell.value} dropDown={dropDown} colObj={cell.column} parentId={cell} rowObj={cell.row} />},
                     width : ares.width
     
                   }
@@ -57,7 +57,7 @@ export const ColumnHeader = (col,parentHeader,updateMyData,dropDown,newArr) =>{
                   return {
                     Header : ares.fieldName,
                     accessor : ares.accessor+'$#'+accres.id,
-                    Cell: ({cell})=>{return <EditableMixCell column={cell.column.id} row={cell.row.id} updateMyData={updateMyData} value={cell.value} rowObj={cell.row} colObj={cell.column} dropDown={dropDown} parentId={cell}/>},
+                    Cell: ({cell})=>{return <EditableMixCell column={cell.column.id} row={cell.row.id} updateMyData={updateMyData} value={cell.value} rowObj={cell.row} colObj={cell.column} dropDown={dropDown} parentId={cell} />},
                     width : ares.width
     
                   }
@@ -65,7 +65,7 @@ export const ColumnHeader = (col,parentHeader,updateMyData,dropDown,newArr) =>{
                   return {
                     Header : ares.fieldName,
                     accessor : ares.accessor+'$#'+accres.id,
-                    Cell: ({cell})=>{return <EditableAttachCell column={cell.column.id} row={cell.row.id} updateMyData={updateMyData} value={cell.value} colObj={cell.column} parentId={cell} />},
+                    Cell: ({cell})=>{return <EditableAttachCell column={cell.column.id} row={cell.row.id} updateMyData={updateMyData} value={cell.value} colObj={cell.column} parentId={cell} rowObj={cell.row} />},
                     width : ares.width
     
                   }

@@ -33,7 +33,9 @@ const HomeTables = ({getColumnData,myAccState,tableSwitch,data,userId,AreaScheme
           <>
           {
             tableSwitch===0 ? 
-            <RTable col={getColumnData.val.sort((a,b)=>{return a.orderBy-b.orderBy}).map((res)=>{return{'Header': res.fieldName,'accessor': res.accessor,'sticky':res.sticky,'Filter': res.columnFilter==='select' ? SelectColumnFilter 
+            <RTable col={getColumnData.val.sort((a,b)=>{return a.orderBy-b.orderBy}).map((res)=>{return{'Header': res.fieldName,'accessor': res.accessor,'sticky':res.sticky,
+            width : res.width,
+            'Filter': res.columnFilter==='select' ? SelectColumnFilter 
             : 
             res.columnFilter==='numRange' ? NumberRangeColumnFilter : ColumnFilter, 'filter' 
             : res.columnFilter==='numRange' ? 'between' : null}})} data={data} userName={userId} AreaSchemeDateSetRed={AreaSchemeDateSetRed}/> 

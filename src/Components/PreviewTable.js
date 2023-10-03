@@ -237,7 +237,17 @@ console.log(colData)
 
     
     useEffect(()=>{
-        dispatch(MainPartyDataSetter([...data]))
+      const editTableCol = colData.filter((fil)=>{return fil.parentCell == 'account'}).map((res)=>{return res.accessor})
+      setsubSheet([...data.map((res)=>{return {...res,id:res.testRef}})])
+      
+      editTableCol.forEach((fres)=>{
+        data.forEach((res)=>{
+          res[fres+'$#'+res.accId] = res[fres]
+        })
+      })
+        dispatch(MainPartyDataSetter(
+          [...data.map((res)=>{return {...res,id:res.testRef}})]
+          ))
     },[data])
 
     const updateMyAttachData = (rowIndex, columnId, value,formDataValue,cell)=>{
