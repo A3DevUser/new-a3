@@ -8,7 +8,7 @@ import { useSticky } from 'react-table-sticky'
 import { useSelector } from 'react-redux'
 
 
-const Table = ({col,dData,accArr,outPutData,parentHeader,setfinalOpData,setfileOpData}) => {
+const Table = ({col,dData,accArr,outPutData,parentHeader,setfinalOpData,setfileOpData,subSheet}) => {
   const [data,setdata]=useState([...dData])
   const [chngRow,setchngRow]=useState({})
   const [finalArr, setfinalArr] =useState([])
@@ -19,17 +19,37 @@ const Table = ({col,dData,accArr,outPutData,parentHeader,setfinalOpData,setfileO
   const AreaSchemeDateSetRed = useSelector((state)=>state.AreaSchemeDateSetRed)
 
   useEffect(()=>{
+
+
     if(MainPartyDataRed){
-        setopData([...opData,...MainPartyDataRed])
-    }else{
-        setopData([...opData])
+      setdata((old)=>{
+        return old.map((res)=>{
+          if(MainPartyDataRed.some(sres => (sres.id == res.id)&&(sres.testRef == res.testRef))){
+            return MainPartyDataRed.filter((sres) =>{ return (sres.id == res.id)&&(sres.testRef == res.testRef)})[0]
+          }else{
+            return res
+          }
+        })
+      })
+    console.log('MainPartyDataRed',MainPartyDataRed)
+
+    setfinalArr((old)=>{
+      return old.map((res)=>{
+        if(MainPartyDataRed.some(sres => (sres.accId==res.accId)&&(sres.testRef==res.testRef))){
+          return MainPartyDataRed.filter((sres) => {return (sres.accId==res.accId)&&(sres.testRef==res.testRef)})[0]
+        }else{
+          return res
+        }
+      })
+    })
     }
+
 },[MainPartyDataRed])
 
 
   useEffect(()=>{
     const colKey =  col.filter((cres)=>{return cres.parentCell==='account'}).map((res)=>{return res.accessor})
-    const accKey = opData.map((res)=>{ return res.accId})
+    const accKey = outPutData.map((res)=>{ return res.accId})
     const selcRowId = mySelRowState.map((res)=>{return res.original.id})
 
 
@@ -53,17 +73,17 @@ if(AreaSchemeDateSetRed.type == 'Sample'){
       })
     })
 
-opData.map((res, i) => {
+    outPutData.map((res, i) => {
       colKey.forEach((cres) => {
         res[cres + '$#' + accKey[i]] = res[cres];
       });
     })
 
-    console.log(opData)
+    console.log(outPutData)
 
 
 const mergedObjects = {};
-opData.forEach((obj) => {
+outPutData.forEach((obj) => {
   const id = obj.testRef;
 
   if (!mergedObjects[id]) {
@@ -79,11 +99,9 @@ mergedArray.forEach(res => colKey.forEach(cres => delete res[cres]))
 
 setdata(data.map((res,i)=>{
   const obj1 = data[i];
-  const obj2 = mergedArray.find((mres)=>mres.testRef === obj1.id)
-
-  console.log(data[i])
-  console.log(mergedArray.forEach((mres)=>{console.log(mres.testRef);
-    console.log(obj1.id)}))
+  const obj2 = mergedArray.find((mres)=>mres.testRef === obj1.testRef)
+  console.log('inside data',obj1)
+  console.log('inside data',obj2)
 
 
   function mergeObjects(obj1, obj2) {
@@ -113,7 +131,7 @@ setdata(data.map((res,i)=>{
   }
 
 }))
-},[opData])
+},[])
 
 const formData = new FormData()
   const updateMyData = (rowIndex, columnId, value, fileData,parentId,isCal) => {
@@ -164,14 +182,23 @@ if(isCal){
   }
 
   useEffect(()=>{
-    setfinalOpData(finalArr)
+
+      setfinalOpData(finalArr)
   },[finalArr])
+
+  useEffect(()=>{
+    if(subSheet.length > 0){
+      console.log('line 401',subSheet) 
+    }
+  },[subSheet])
 
     const[columns]=useState(ColumnHeader(col,parentHeader,updateMyData,data.map((res)=>{return{id:res.id,dropDown :res.dropDown, logicDd : res.logic, mixVal : res.mixVal}}),accArr,))
 
+    // console.log(ColumnHeader(col,parentHeader,updateMyData,data.map((res)=>{return{id:res.id,dropDown :res.dropDown, logicDd : res.logic, mixVal : res.mixVal}}),accArr,))
       useEffect(()=>{
         if(chngRow.rowIndex){
           let obj ={...data[chngRow.rowIndex]}
+          console.log('theObj',obj)
            Object.keys(obj).filter((fil)=>{return fil.includes('$#')}).filter((fil)=>{return !fil.includes(chngRow.parentId)}).forEach((res)=>{ delete obj[res] })
           Object.keys(obj).filter((fil)=>{return fil.includes('$#')}).forEach((res)=>{obj[res.split('$#')[0]]=obj[res]; delete obj[res]})
 
@@ -182,7 +209,7 @@ if(isCal){
           }, {})
 
           if(finalArr.length==0 || finalArr.filter((fil)=>{ return (fil.id == newObj.id)&&(fil.testRef == newObj.testRef)}).length == 0){
-            setfinalArr([...finalArr,newObj])
+            setfinalArr(finalArr.map((res)=>{return res}).concat(newObj))
           }else{
             setfinalArr(old =>{
               return old.map((res)=>{
@@ -196,7 +223,7 @@ if(isCal){
           }
         }
 
-console.log(data)
+console.log('data',data)
 console.log(columns)
    
         },[data])

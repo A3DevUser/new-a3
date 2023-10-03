@@ -24,8 +24,9 @@ import { CSVLink } from 'react-csv';
 import { saveUserData } from '../actions/SaveUserId';
 import { fetchApiData } from '../actions/ApiRepoAction';
 import { fetchOutputId } from '../actions/outputIdCount';
+import _ from 'lodash'; 
 
-function NavbarParty({sheets,auditId,schemeCode,userId,allAcc,auditType, sheetId, sheetAccounts,solId,outputId,finalOpData,fileOpData,setsubSheet}) {
+function NavbarParty({sheets,auditId,schemeCode,userId,allAcc,auditType, sheetId, sheetAccounts,solId,outputId,finalOpData,fileOpData,setsubSheet,subSheet}) {
 
   const[cellArray,setcellArray]=useState([])
   const[finalCellArray,setfinalCellArray]=useState([])
@@ -299,6 +300,10 @@ const getOutputData = useSelector((state)=>state.getOutputData)
 // }
 // },[submitState])
 
+// useEffect(()=>{
+//   console.log('finalOpData',finalOpData)
+// },[finalOpData])
+
 
   const history = useHistory()
 //       const [value, setValue] = useState()
@@ -394,15 +399,26 @@ const getOutputData = useSelector((state)=>state.getOutputData)
     // The below handleSave function handles save with the validation of save popup
 
     const handleSave = () =>{
+console.log(finalOpData)
+      let failArr = []
+      finalOpData.forEach((fres)=>{
+        if(( fres.result !=='Pass'&& fres.result !== 'Na')&& (fres.remarks===null || fres.remarks===undefined || fres.remarks==='')){
+          failArr.push(fres)
+        }
+      })
+     if(failArr.length > 0){
+      dispatch(fetchModColData('Form-104'))
+      setfinalArray(_.uniqWith(failArr, (obj1, obj2) => {
+        return obj1.accId === obj2.accId && obj1.testRef === obj2.testRef;
+      }))
+      setmodalOpen(true)
+     }else{
       // console.log(finalOpData)
-      const nonPassNa = finalOpData.filter((fil)=>{return (fil.result!=='Pass' && fil.result !=='Na')  &&(fil.remarks===null || fil.remarks===undefined || fil.remarks==='')});
-      if(nonPassNa.length > 0){
-        dispatch(fetchModColData('Form-104'))
-        setfinalArray(nonPassNa)
-        setmodalOpen(true)
-      }else{
-        alert(JSON.stringify(finalOpData))
-      }
+      console.log(_.uniqWith(finalOpData, (obj1, obj2) => {
+        return obj1.accId === obj2.accId && obj1.testRef === obj2.testRef;
+      }))
+     }
+      
 
     }
 

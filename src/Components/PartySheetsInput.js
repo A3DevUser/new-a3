@@ -142,6 +142,10 @@ const PartySheetsInput = (props) => {
 
     }
 
+    useEffect(()=>{
+        console.log(subSheet)
+    },[subSheet])
+
     // useEffect(()=>{
     //     if(MainPartyDataRed){
     //         setOutputData([...getOutputData.val,...MainPartyDataRed])
@@ -363,7 +367,7 @@ const PartySheetsInput = (props) => {
     return (
         <>
         {getOutputData.val.length >= 0 ?<>{generatedSheetDetails && <div style={{position:'sticky',top:'0',zIndex:'999'}}>
-            <NavbarParty sheets = {generatedSheetDetails} auditId = {auditId} schemeCode = {schemeCode} userId = {userId} allAcc={`${allAcc}`} sheetId={location.state.sheetId} sheetAccounts={accounts} outputId={outputId} finalOpData={finalOpData} fileOpData={fileOpData} setsubSheet = {setsubSheet}/>
+            <NavbarParty sheets = {generatedSheetDetails} auditId = {auditId} schemeCode = {schemeCode} userId = {userId} allAcc={`${allAcc}`} sheetId={location.state.sheetId} sheetAccounts={accounts} outputId={outputId} finalOpData={finalOpData} fileOpData={fileOpData} setsubSheet = {setsubSheet} subSheet ={subSheet}/>
             </div>
             }
         {/* {isSaved? <><div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -412,7 +416,7 @@ AreaSchemeDateSetRed.type == 'Sample' ?
         //    </div> :
 
         // <Table accData={['Test Details',...accounts]} TableData={getTestData.val} columnData={getColumnData.val.sort((a,b)=>{return a.orderBy-b.orderBy})} schemeCode={location.state.schemeCode} outputData={getOutputData.val} auditId={auditId} userId = {userId} accDetails={getTableAccountData.val} newHead={getPartyHeaderData.val}/>
-        <Table accArr={getTableAccountData.val} col={getColumnData.val.sort((a,b)=>{return a.orderBy-b.orderBy})} dData={getTestData.val} outPutData={getOutputData.val} parentHeader={getPartyHeaderData.val} setfinalOpData={setfinalOpData} setfileOpData={setfileOpData} />) :
+        <Table accArr={getTableAccountData.val} col={getColumnData.val.sort((a,b)=>{return a.orderBy-b.orderBy})} dData={getTestData.val} outPutData={getOutputData.val} parentHeader={getPartyHeaderData.val} setfinalOpData={setfinalOpData} setfileOpData={setfileOpData} subSheet ={subSheet} />) :
 
         (getColumnData.loading ? 
             <div className="d-flex justify-content-center party-loading-style">
@@ -446,7 +450,7 @@ AreaSchemeDateSetRed.type == 'Sample' ?
          //    </div> :
  
          // <Table accData={['Test Details',...accounts]} TableData={getTestData.val} columnData={getColumnData.val.sort((a,b)=>{return a.orderBy-b.orderBy})} schemeCode={location.state.schemeCode} outputData={getOutputData.val} auditId={auditId} userId = {userId} accDetails={getTableAccountData.val} newHead={getPartyHeaderData.val}/>
-         <Table accArr={accounts} col={getColumnData.val.sort((a,b)=>{return a.orderBy-b.orderBy})} dData={getTestData.val} outPutData={getOutputData.val} parentHeader={getPartyHeaderData.val} setfinalOpData={setfinalOpData} setfileOpData={setfileOpData} />)
+         <Table accArr={accounts} col={getColumnData.val.sort((a,b)=>{return a.orderBy-b.orderBy})} dData={getTestData.val} outPutData={getOutputData.val} parentHeader={getPartyHeaderData.val} setfinalOpData={setfinalOpData} setfileOpData={setfileOpData} subSheet ={subSheet} />)
 
 
 
