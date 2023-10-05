@@ -73,6 +73,8 @@ const getOutputData = useSelector((state)=>state.getOutputData)
   const accRef = useRef()
 
   const dispatch = useDispatch()
+
+  const validValues = ['Pass','Na']
 //   // let failArr=[]
 //   // const handleSave = ()=>{
 
@@ -397,12 +399,13 @@ const getOutputData = useSelector((state)=>state.getOutputData)
     }
 
     // The below handleSave function handles save with the validation of save popup
+    // fres.result !=='Pass'&& fres.result !== 'Na'
 
     const handleSave = () =>{
 console.log(finalOpData)
       let failArr = []
       finalOpData.forEach((fres)=>{
-        if(( fres.result !=='Pass'&& fres.result !== 'Na')&& (fres.remarks===null || fres.remarks===undefined || fres.remarks==='')){
+        if(( !fres.result.includes(validValues) )&& (fres.remarks===null || fres.remarks===undefined || fres.remarks==='')){
           failArr.push(fres)
         }
       })
@@ -424,6 +427,10 @@ console.log(finalOpData)
 
     const handleSubmitAll = () =>{
       console.log(acc)
+    }
+
+    const handleForms = () =>{
+      history.push({pathname:'/Forms'})
     }
 
       
@@ -533,6 +540,7 @@ console.log(finalOpData)
   </datalist>
   <button onClick={searchAccount} className='btn btn-success mx-2'>Search</button>
     </div> 
+    <button className='btn btn-success mx-2' onClick={handleForms}>Compliance</button>
     <DropdownButton
     title='Overview'
     variant='success'

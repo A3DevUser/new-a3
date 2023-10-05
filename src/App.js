@@ -15,6 +15,7 @@ import Dashboard from './Components/Dashboard';
 import RTable from './Components/RTable';
 import Hometable2 from './Components/Hometable2';
 import CompComponent from './Components/CompComponent';
+import Forms from './Components/Forms';
 // import DivideAccounysUpdated from './Components/DivideAccounysUpdated';
 
 function App() {
@@ -73,6 +74,11 @@ function App() {
       <Switch>
         <Route exact path= '/Component/CompComponent'>
           <CompComponent/>
+        </Route>
+      </Switch>
+      <Switch>
+        <Route exact path='/Forms'>
+          <Forms/>
         </Route>
       </Switch>
     </div>

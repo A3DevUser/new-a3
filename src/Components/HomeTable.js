@@ -46,6 +46,7 @@ const HomeTable = ({setHomeAccountsDetails,setHomeTestDetails,setHomeGeneratedSh
   const[auditType,setAuditType] = useState();
   const[tableSwitch,settableSwitch]=useState(0)
   const[area,setarea] =useState([])
+  const[startDate,setstartDate] = useState()
 
   const myAccState = useSelector((state)=>state.getAccountData)
   const myAccSpState = useSelector((state)=>state.getAccountSpData)
@@ -73,6 +74,7 @@ const HomeTable = ({setHomeAccountsDetails,setHomeTestDetails,setHomeGeneratedSh
               // dispatch( fetchAreaData(response.data[0].auditType))
               dispatch(fetchDDData('Form-101'))
               setAuditType(response.data[0].auditType)
+              setstartDate(response.data[0].startDate)
               setAuditStatus(response.data[0].status)
               dispatch(AuditTypeSetter({auditType:response.data[0].auditType,userId:userId,auditUrl:auditUrl,solId:response.data[0].solId}))
 
@@ -248,7 +250,7 @@ const HomeTable = ({setHomeAccountsDetails,setHomeTestDetails,setHomeGeneratedSh
     return (
         <div>
         <NewNavBar getToken={getToken} dividePartyFunction={dividePartyFunction} generateExcel={generateExcel} schemeAll={schemeAll} userId={userId} handleTableSwitch={handleTableSwitch} />
-        <HomeCollapse auditTitle={auditTitle} solId={solId} auditStatus={auditStatus} setSchemeCode={setSchemeCode} auditId={auditId} auditType={auditType} handleFetchAccounts={handleFetchAccounts} area={area} />
+        <HomeCollapse auditTitle={auditTitle} solId={solId} auditStatus={auditStatus} setSchemeCode={setSchemeCode} auditId={auditId} auditType={auditType} handleFetchAccounts={handleFetchAccounts} area={area} startDate={startDate}/>
       <Styles>
         {
           getNewAccData.loading ?  <SpinnerLoader/>

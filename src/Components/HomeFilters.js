@@ -12,10 +12,10 @@ import { fetchNewAccData } from '../actions/NewAccountAct';
 import { fetchApiData } from '../actions/ApiRepoAction';
 import './HomeFilter.css'
 
-const HomeFilters = ({setSchemeCode,solId,area}) => {
+const HomeFilters = ({setSchemeCode,solId,area,startDate}) => {
     const dispatch = useDispatch()
 
-    const currentDate = new Date;
+    const currentDate = new Date(startDate);
     const currentMonth = currentDate.getMonth()+1;
     const currentYear = currentDate.getFullYear();
     const lastDate = new Date(currentDate.getFullYear(),currentDate.getMonth()+1,0);    

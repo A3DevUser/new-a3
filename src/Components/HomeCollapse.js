@@ -4,7 +4,7 @@ import AuditDetails from './AuditDetails'
 import HomeFilters from './HomeFilters'
 import HomeUserTable from './HomeUserTable'
 
-const HomeCollapse = ({area,auditTitle,solId,auditStatus,setSchemeCode,auditId,auditType,handleFetchAccounts}) => {
+const HomeCollapse = ({area,auditTitle,solId,auditStatus,setSchemeCode,auditId,auditType,handleFetchAccounts,startDate}) => {
   return (
     <div>
       <div className="row" style={{width:'99.3vw'}}>
@@ -18,7 +18,7 @@ const HomeCollapse = ({area,auditTitle,solId,auditStatus,setSchemeCode,auditId,a
           <div className="col">
             <div className="collapse show multi-collapse" id="multiCollapseExample2">
               <div className="card card-body ">
-              {solId && <HomeFilters setSchemeCode = {setSchemeCode} solId = {solId} area={area}/>}
+              {solId && startDate && <HomeFilters setSchemeCode = {setSchemeCode} solId = {solId} area={area} startDate={startDate}/>}
                 <button type="button" className='btn btn-success fetch-button my-3 container' onClick = {handleFetchAccounts}>Fetch Accounts</button>
               </div>
             </div>
